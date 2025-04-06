@@ -3,21 +3,20 @@ async function getQuote() {
   quoteElement.innerText = "Loading...";
 
   try {
-    const res = await fetch("https://api.quotable.io/random", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    if (!res.ok) throw new Error("API error");
+    const res = await fetch("https://zenquotes.io/api/random");
+    if (!res.ok) throw new Error("API Error");
 
     const data = await res.json();
-    quoteElement.innerText = `"${data.content}" — ${data.author}`;
+    const quote = data[0].q;
+    const author = data[0].a;
+
+    quoteElement.innerText = `"${quote}" — ${author}`;
   } catch (error) {
-    quoteElement.innerText = "⚠️ Failed to load quote. Please try again later.";
+    // 🌟 Show a default quote instead of error
+    quoteElement.innerText = `"Believe you can and you're halfway there." — Theodore Roosevelt`;
   }
 }
 
 getQuote();
+
 
