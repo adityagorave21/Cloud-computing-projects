@@ -1,11 +1,23 @@
 async function getQuote() {
+  const quoteElement = document.getElementById("quote");
+  quoteElement.innerText = "Loading...";
+
   try {
-    const res = await fetch("https://api.quotable.io/random");
+    const res = await fetch("https://api.quotable.io/random", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    if (!res.ok) throw new Error("API error");
+
     const data = await res.json();
-    document.getElementById("quote").innerText = `"${data.content}" — ${data.author}`;
+    quoteElement.innerText = `"${data.content}" — ${data.author}`;
   } catch (error) {
-    document.getElementById("quote").innerText = "Failed to load quote. Try again.";
+    quoteElement.innerText = "⚠️ Failed to load quote. Please try again later.";
   }
 }
 
 getQuote();
+
