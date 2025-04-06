@@ -1,3 +1,11 @@
+const fallbackQuotes = [
+  { q: "Believe you can and you're halfway there.", a: "Theodore Roosevelt" },
+  { q: "Do one thing every day that scares you.", a: "Eleanor Roosevelt" },
+  { q: "Your time is limited, so don't waste it living someone else's life.", a: "Steve Jobs" },
+  { q: "The best way to predict the future is to invent it.", a: "Alan Kay" },
+  { q: "Happiness is not something ready-made. It comes from your own actions.", a: "Dalai Lama" }
+];
+
 async function getQuote() {
   const quoteElement = document.getElementById("quote");
   quoteElement.innerText = "Loading...";
@@ -12,11 +20,13 @@ async function getQuote() {
 
     quoteElement.innerText = `"${quote}" — ${author}`;
   } catch (error) {
-    // 🌟 Show a default quote instead of error
-    quoteElement.innerText = `"Believe you can and you're halfway there." — Theodore Roosevelt`;
+    // Pick a random fallback quote
+    const random = fallbackQuotes[Math.floor(Math.random() * fallbackQuotes.length)];
+    quoteElement.innerText = `"${random.q}" — ${random.a}`;
   }
 }
 
 getQuote();
+
 
 
